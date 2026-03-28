@@ -45,5 +45,7 @@ workflows:
           cp *.ipa $CM_BUILD_DIR/ 2>/dev/null || true
 
     artifacts:
-      - *.ipa
-      - $CM_BUILD_DIR/*.ipa
+      - path: "*.ipa"
+        name: PlanetaryCalculator
+      - path: "$CM_BUILD_DIR/*.ipa"
+        name: build_artifact
