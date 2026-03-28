@@ -1,31 +1,18 @@
 workflows:
   ios-workflow:
-    name: iOS Build
+    name: iOS Build (Unsigned for TrollStore)
     max_build_duration: 60
     environment:
       flutter: stable
       xcode: latest
       cocoapods: default
     scripts:
-      - name: Set up code signing
-        script: |
-          keychain initialize
-          app-store-connect fetch-signing-files "com.astro.planetary_calculator" --type IOS_APP_STORE
-          keychain add-certificates
-          xcode-project use-profiles
       - name: Flutter get
         script: |
           flutter packages pub get
-      - name: Flutter analyze
-        script: |
-          flutter analyze
       - name: Build iOS project
         script: |
           flutter build ipa --release --export-options-plist=/Users/builder/export_options.plist
     artifacts:
       - build/ios/ipa/*.ipa
       - build/ios/iphoneos/*.app
-    publishing:
-      email:
-        recipients:
-          - notifications@example.com
